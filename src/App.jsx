@@ -2,7 +2,7 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import { Field } from "./Field.jsx";
 
-export let mapScaleFactor = 0.6;
+export let mapScaleFactor = 0.8;
 let sizeScalingx = (innerWidth / 2) * mapScaleFactor;
 let sizeScalingy = (innerHeight / 2) * mapScaleFactor;
 
@@ -100,10 +100,13 @@ function App() {
         };
       });
 
+      let dx = sizeScalingx / mapScaleFactor - position.x;
+      let dy = sizeScalingy / mapScaleFactor - position.y;
+
       if (enemies) {
-        const targetX = position.x;
-        const targetY = position.y;
-        const enemySpeed = 3;
+        const targetX = dx;
+        const targetY = dy;
+        const enemySpeed = 1;
 
         for (let enemy of enemies) {
           enemy.move(targetX, targetY, enemySpeed);
@@ -122,7 +125,7 @@ function App() {
   useEffect(() => {
     if (paused) return;
     if (!keys.includes("k")) return;
-    if (enemies.length < 10 * wave) {
+    if (enemies.length < 1 * wave) {
       const y =
         Math.random() <= 0.5
           ? (Math.random() + 1) * window.innerHeight * mapScaleFactor
